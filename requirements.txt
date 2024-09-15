@@ -1,4 +1,0 @@
-pip3 install gspread oauth2client
-pip3 install mysql-connector-python
-pip3 install --upgrade cryptography pyOpenSSL
-
