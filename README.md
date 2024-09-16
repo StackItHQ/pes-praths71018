@@ -87,3 +87,8 @@ All the best ✨.
 - Create a server in express which is connected to MySQL database
 - Write a JavaScript code in AppScript in google sheets to enable realtime synchronisation with database by adding triggers when opening and editing the sheets.
 - Run the server using ngrok.
+
+### Note
+
+- credentials.json file isn't pushed in repository for precautionary purposes.
+- password for MySQL database is removed in the repository again for precautionary purposes.
