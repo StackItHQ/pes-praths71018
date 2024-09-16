@@ -1,3 +1,4 @@
+// This is for Google AppScript to be opened in Google Sheets
 function onOpen() {
   updateDatabaseWithSheetContent();
 }
