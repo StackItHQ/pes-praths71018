@@ -1,3 +1,35 @@
+function onOpen() {
+  updateDatabaseWithSheetContent();
+}
+
+function updateDatabaseWithSheetContent() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues(); // Fetches slno and name columns, starting from row 2 (excluding header)
+  var url =
+    "https://0808-2406-7400-94-2326-dd10-6df7-1622-5da6.ngrok-free.app/update-database"; // Replace with your ngrok URL
+
+  // Construct the request payload (sheet data)
+  var payload = {
+    data: data,
+  };
+
+  // Define request options
+  var options = {
+    method: "POST",
+    contentType: "application/json",
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true,
+  };
+
+  try {
+    // Send data to the server (API)
+    var response = UrlFetchApp.fetch(url, options);
+    Logger.log(response.getContentText());
+  } catch (error) {
+    Logger.log("Error updating database: " + error.message);
+  }
+}
+
 function onEdit(e) {
   if (!e) {
     Logger.log("Event object is undefined.");

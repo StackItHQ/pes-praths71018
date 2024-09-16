@@ -68,33 +68,48 @@ app.post("/crud-operation", (req, res) => {
 });
 
 // Fetch all records from the database
-// app.get("/fetch-records", (req, res) => {
-//   const query = "SELECT * FROM my_table";
-
-//   db.query(query, (err, results) => {
-//     if (err) {
-//       console.error("Error fetching records:", err);
-//       return res.status(500).send("Error fetching records");
-//     }
-
-//     res.json(results);
-//   });
-// });
-
 app.get("/fetch-records", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "*"); // CORS
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // Disable cache
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-
   const query = "SELECT * FROM my_table";
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching records:", err);
       return res.status(500).send("Error fetching records");
     }
+
     res.json(results);
+  });
+});
+
+// Route to update the database with Google Sheets content
+app.post("/update-database", (req, res) => {
+  const sheetData = req.body.data;
+
+  if (!sheetData || sheetData.length === 0) {
+    return res.status(400).send("No data provided");
+  }
+
+  // Clear the database first
+  const deleteQuery = "DELETE FROM my_table";
+
+  db.query(deleteQuery, (deleteErr) => {
+    if (deleteErr) {
+      console.error("Error deleting records:", deleteErr);
+      return res.status(500).send("Error deleting records");
+    }
+
+    // Insert new data from Google Sheets
+    const insertQuery = "INSERT INTO my_table (slno, name) VALUES ?";
+    const values = sheetData.map((row) => [row[0], row[1]]); // Adjust according to your columns
+
+    db.query(insertQuery, [values], (insertErr) => {
+      if (insertErr) {
+        console.error("Error inserting records:", insertErr);
+        return res.status(500).send("Error inserting records");
+      }
+
+      res.send("Database updated successfully");
+    });
   });
 });
 
