@@ -85,7 +85,7 @@ All the best ✨.
 - From the credentials of project copy the email account and give that account editor access to Google Sheets
 - Create a new Google sheet and add the data to it.
 - Create a server in express which is connected to MySQL database
-- Write a JavaScript code in AppScript in google sheets to enable realtime synchronisation with database by adding triggers when opening and editing the sheets.
+- Write a code in Google App Script in Google sheets to enable realtime synchronisation with database by adding triggers when opening and editing the sheets.
 - Run the server using ngrok.
 
 ### Note
