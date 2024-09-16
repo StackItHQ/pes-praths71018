@@ -90,5 +90,5 @@ All the best ✨.
 
 ### Note
 
-- credentials.json file isn't pushed in repository for precautionary purposes.
+- credentials.json file isn't pushed in repository for precautionary purposes. (hence .gitignore file)
 - password for MySQL database is removed in the repository again for precautionary purposes.
