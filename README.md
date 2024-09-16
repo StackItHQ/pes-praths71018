@@ -92,3 +92,7 @@ All the best ✨.
 
 - credentials.json file isn't pushed in repository for precautionary purposes. (hence .gitignore file)
 - password for MySQL database is removed in the repository again for precautionary purposes.
+- Opening Google App Script
+  - Open Google Sheets
+  - Go to Extensions > Apps Script in Google Sheets.
+  - Write a script that will run whenever the sheet is edited.
