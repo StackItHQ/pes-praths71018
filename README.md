@@ -75,7 +75,7 @@ All the best ✨.
 
 ### Video Link
 
-[Insert video link here]
+[[Insert video link here](https://github.com/StackItHQ/pes-praths71018/tree/main/video)]
 
 ### Approach
 
