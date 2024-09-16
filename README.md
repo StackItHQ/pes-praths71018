@@ -77,7 +77,7 @@ All the best ✨.
 
 [[Demonstration](https://github.com/StackItHQ/pes-praths71018/tree/main/video)]
 
-### Approach
+### Summarised Approach
 
 - Open Google cloud console and Create a Project
 - Enable Google drive and Google Sheets API
