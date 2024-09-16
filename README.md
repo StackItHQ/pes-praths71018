@@ -88,6 +88,21 @@ All the best ✨.
 - Write a code in Google App Script in Google sheets to enable realtime synchronisation with database by adding triggers when opening and editing the sheets.
 - Run the server using ngrok.
 
+### Results
+1. Real-time Synchronisation
+    - Achieved Real time synchronisation i.e. whenever changes are made in Google Sheets , it is reflected in MySQL database.
+
+2. CRUD Operations
+    - Ensured the system supports Create, Read, Update, and Delete operations.
+    - Maintain data consistency across both platforms i.e. sheets and database.
+
+3. Conflict Handling
+    - Whenever Google Sheets is opened the database is automatically updated with data in sheets.
+    - Error Handling is taken care.
+
+4. Scalability
+    - Server is highly Scalable.
+
 ### Note
 
 - credentials.json file isn't pushed in repository for precautionary purposes. (hence .gitignore file)
