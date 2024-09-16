@@ -89,26 +89,48 @@ app.post("/update-database", (req, res) => {
     return res.status(400).send("No data provided");
   }
 
-  // Clear the database first
-  const deleteQuery = "DELETE FROM my_table";
+  // Extract `slno` values from the sheet data for comparison
+  const sheetSlno = sheetData.map((row) => row[0]);
 
-  db.query(deleteQuery, (deleteErr) => {
+  // First, find the records in the database that are not in the Google Sheets data and delete them
+  const deleteQuery = "DELETE FROM my_table WHERE slno NOT IN (?)";
+
+  db.query(deleteQuery, [sheetSlno], (deleteErr) => {
     if (deleteErr) {
       console.error("Error deleting records:", deleteErr);
       return res.status(500).send("Error deleting records");
     }
 
-    // Insert new data from Google Sheets
-    const insertQuery = "INSERT INTO my_table (slno, name) VALUES ?";
-    const values = sheetData.map((row) => [row[0], row[1]]); // Adjust according to your columns
+    // Then, find rows that are in the sheet but not in the database and insert them
+    const selectQuery = "SELECT slno FROM my_table WHERE slno IN (?)";
 
-    db.query(insertQuery, [values], (insertErr) => {
-      if (insertErr) {
-        console.error("Error inserting records:", insertErr);
-        return res.status(500).send("Error inserting records");
+    db.query(selectQuery, [sheetSlno], (selectErr, existingRows) => {
+      if (selectErr) {
+        console.error("Error selecting records:", selectErr);
+        return res.status(500).send("Error selecting records");
       }
 
-      res.send("Database updated successfully");
+      // Find rows in the sheet that are not in the existing database rows
+      const existingSlno = existingRows.map((row) => row.slno);
+      const newRows = sheetData.filter((row) => !existingSlno.includes(row[0]));
+
+      if (newRows.length > 0) {
+        // Insert the new rows into the database
+        const insertQuery = "INSERT INTO my_table (slno, name) VALUES ?";
+
+        const values = newRows.map((row) => [row[0], row[1]]);
+
+        db.query(insertQuery, [values], (insertErr) => {
+          if (insertErr) {
+            console.error("Error inserting records:", insertErr);
+            return res.status(500).send("Error inserting records");
+          }
+
+          res.send("Database updated successfully");
+        });
+      } else {
+        res.send("Database updated successfully with no new records added.");
+      }
     });
   });
 });
