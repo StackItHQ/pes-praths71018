@@ -68,15 +68,32 @@ app.post("/crud-operation", (req, res) => {
 });
 
 // Fetch all records from the database
-app.get("/fetch-records", (req, res) => {
-  const query = "SELECT * FROM my_table";
+// app.get("/fetch-records", (req, res) => {
+//   const query = "SELECT * FROM my_table";
 
+//   db.query(query, (err, results) => {
+//     if (err) {
+//       console.error("Error fetching records:", err);
+//       return res.status(500).send("Error fetching records");
+//     }
+
+//     res.json(results);
+//   });
+// });
+
+app.get("/fetch-records", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "*"); // CORS
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // Disable cache
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
+  const query = "SELECT * FROM my_table";
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching records:", err);
       return res.status(500).send("Error fetching records");
     }
-
     res.json(results);
   });
 });
